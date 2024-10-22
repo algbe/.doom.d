@@ -36,7 +36,7 @@
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type t)
+(setq display-line-numbers-type 'relative)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -101,17 +101,23 @@
 (setq doom-font (font-spec :family "0xProto Nerd Font" :size 16))
 
 ;; Theme
-(setq doom-theme 'doom-monokai-pro)
+(setq doom-theme 'doom-gruvbox)
+(after! doom (doom/set-frame-opacity 85))
 
-;; accept completion from copilot and fallback to company
-;; (use-package! copilot
-;;   :hook (prog-mode . copilot-mode)
-;;   :bind (:map copilot-completion-map
-;;               ("C-j" . 'copilot-accept-completion)
-;;               ("C-TAB" . 'copilot-accept-completion-by-word)
-;;               ("C-<tab>" . 'copilot-accept-completion-by-word)
-;;               ("C-]" . 'copilot-next-completion)
-;;               ("C-[" . 'copilot-previous-completion)))
+;;accept completion from copilot and fallback to company
+(use-package! copilot
+  :hook (prog-mode . copilot-mode)
+  :bind (:map copilot-completion-map
+              ("C-j" . 'copilot-accept-completion)
+              ("C-TAB" . 'copilot-accept-completion-by-word)
+              ("C-<tab>" . 'copilot-accept-completion-by-word)
+              ("C-]" . 'copilot-next-completion)
+              ("C-[" . 'copilot-previous-completion)))
+
+;; Use prettier for formatting JSON files
+(use-package! prettier
+  :hook ((json-mode . prettier-mode)
+         (jsonc-mode . prettier-mode)))
 
 ;; (use-package! chatgpt-arcana
 ;;   :init
